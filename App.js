@@ -13,7 +13,6 @@ export default function App() {
   const [ playText, setPlayText ] = useState('Go')
   const [ time, setTime ] = useState('00:00:00');
   const [ recordList, setRecordList ] = useState([]);
-  const [ runnig, setRunnig ] = useState(false);
   
 
   function play(){
@@ -44,7 +43,8 @@ export default function App() {
   }
 
   function record(){
-
+    let currentTime = time;
+    setRecordList([...recordList,currentTime]);
   }
 
   
@@ -53,6 +53,9 @@ export default function App() {
       <View style={styles.display}>
         <Text style={{fontWeight:'bold', color:'#FFF', fontSize: 48}}>{time}</Text>
       </View>
+      <View style={styles.record}>
+        <FlatList style={styles.record} showsVerticalScrollIndicator={false} data={recordList} renderItem={({item})=>(<Text style={{color:'#fff', fontSize: 20}}>{item}</Text>)}/>
+      </View>
       <View style={styles.actions}> 
         <TouchableOpacity onPress={play}>
           <View style={styles.play}>
@@ -60,7 +63,7 @@ export default function App() {
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.mark} onPress={record}>
-          <Ionicons name='alarm' color='#FFF' size={50}/>
+          <Ionicons name='time' color='#FFF' size={50}/>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto"/>
@@ -84,6 +87,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 100
+  },
+  record:{
+    height: 240
   },
   actions:{
     position: 'absolute',
