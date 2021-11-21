@@ -47,6 +47,17 @@ export default function App() {
     setRecordList([...recordList,currentTime]);
   }
 
+  function restart(){
+    clearInterval(timer);
+    setRecordList([]);
+    timer=null;
+    setTime('00:00:00');
+    setPlayText('Go');
+    ds=0;
+    ss=0;
+    mm=0;
+    hh=0;
+  }
   
   return (
     <View style={styles.container}>
@@ -54,9 +65,12 @@ export default function App() {
         <Text style={{fontWeight:'bold', color:'#FFF', fontSize: 48}}>{time}</Text>
       </View>
       <View style={styles.record}>
-        <FlatList style={styles.record} showsVerticalScrollIndicator={false} data={recordList} renderItem={({item})=>(<Text style={{color:'#fff', fontSize: 20}}>{item}</Text>)}/>
+        <FlatList style={styles.record} showsVerticalScrollIndicator={false} data={recordList} renderItem={({item, index})=>(<Text key={item} style={{color:'#fff', fontSize: 20}}>T{index+' '+item}</Text>)}/>
       </View>
       <View style={styles.actions}> 
+        <TouchableOpacity style={styles.mark} onPress={restart}>
+          <Ionicons name='reload' color='#FFF' size={50}/>
+        </TouchableOpacity>
         <TouchableOpacity onPress={play}>
           <View style={styles.play}>
             <Text style={{fontWeight:'bold', fontSize: 20, color: '#FFF'}}>{playText}</Text>
@@ -81,7 +95,7 @@ const styles = StyleSheet.create({
   display:{
     width: 350,
     height: 350,
-    borderRadius: 300/2,
+    borderRadius: 350/2,
     borderWidth: 10,
     borderColor: "#FFF",
     justifyContent: 'center',
@@ -92,10 +106,13 @@ const styles = StyleSheet.create({
     height: 240
   },
   actions:{
+    width: '90%',
+    flex: 1,
     position: 'absolute',
     bottom: 20,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   play:{
     width: 100,
@@ -108,7 +125,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   mark:{
-    position: 'absolute',
-    right: -80,
+    
   }
 });
