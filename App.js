@@ -65,14 +65,14 @@ export default function App() {
         <Text style={{fontWeight:'bold', color:'#FFF', fontSize: 48}}>{time}</Text>
       </View>
       <View style={styles.record}>
-        <FlatList style={styles.record} showsVerticalScrollIndicator={false} data={recordList} renderItem={({item, index})=>(<Text key={item} style={{color:'#fff', fontSize: 20}}>T{index+' '+item}</Text>)}/>
+        <FlatList style={styles.record} keyExtractor={(item,index)=>(index)} showsVerticalScrollIndicator={false} data={recordList} renderItem={({item, index})=>(<Text key={item} style={{color:'#fff', fontSize: 20}}>T{index+' '+item}</Text>)}/>
       </View>
       <View style={styles.actions}> 
         <TouchableOpacity style={styles.mark} onPress={restart}>
           <Ionicons name='reload' color='#FFF' size={50}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={play}>
-          <View style={styles.play}>
+          <View style={[styles.play,{backgroundColor: playText==='Go'?'#36578A':'#8A3000',}]}>
             <Text style={{fontWeight:'bold', fontSize: 20, color: '#FFF'}}>{playText}</Text>
           </View>
         </TouchableOpacity>
@@ -80,7 +80,7 @@ export default function App() {
           <Ionicons name='time' color='#FFF' size={50}/>
         </TouchableOpacity>
       </View>
-      <StatusBar style="auto"/>
+      <StatusBar style="light"/>
     </View>
   );
 }
@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
     
   },
   display:{
-    width: 350,
-    height: 350,
+    width: 300,
+    height: 300,
     borderRadius: 350/2,
     borderWidth: 10,
     borderColor: "#FFF",
@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   record:{
-    height: 240
+    marginTop: 20,
+    height: '25%'
   },
   actions:{
     width: '90%',
@@ -115,9 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   play:{
-    width: 100,
-    height: 100,
-    backgroundColor: '#36578A',
+    width: 90,
+    height: 90,
     borderRadius: 300/2,
     borderWidth: 6,
     borderColor: "#FFF",
